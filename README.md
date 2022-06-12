@@ -41,3 +41,72 @@ conda install pandas numpy plotly matplotlib notebook scikit-learn
 The dataset used in the implementation is the Iris dataset (See Table 3.1 and Fig. 3.1) with four attributes, `sepal length`, `sepal width`, `petal length`, and `petal width` and a Species label to identify the species of flower, viz., `Iris setosa`, `Iris versicolor`, and `Iris virginica`.
 
 ---
+## Procedure and Result:
+- Step1:
+  First of all, we import the necessary library, import the dataset and slice the important features
+
+
+```python
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+## Importing the dataset
+iris_df = pd.read_csv("./Dataset/iris.csv")
+
+#slicing the important features
+x = iris_df.iloc[:, [0,1,2,3]].values
+```
+- Step2:
+  Now, We have to find the optimal K value for clustering the data. Now we will use the Elbow method to find the optimal K value.
+
+```python
+wcss = []
+
+for i in range(1,11):
+    kmeans = KMeans(n_clusters = i, init = "k-means++", max_iter= 300, n_init= 10, random_state= 0)
+    kmeans.fit(x)
+    wcss.append(kmeans.inertia_)
+```
+> “init” argument is the method for initializing the centroid.
+
+- Step 3: Now that we have calculated the WCSS value for each K value. Now we have to plot the WCSS with K value
+```python
+plt.figure(figsize= (20,9))
+plt.plot(range(1,11), wcss)
+plt.title("The elbow method")
+plt.xlabel("Number of clusters")
+plt.ylabel("Within-Cluster Sum of Square")
+```
+The graph will be:
+
+![image](./images/elbow.png)
+
+- Step 4: The point at which the elbow shape is created is 3, that is, our K value or an optimal number of clusters is 3. Now let’s train the model on the dataset with a number of clusters 3.
+  
+```python
+## Implementing/Creating the kmeans classifier
+kmeans = KMeans(n_clusters= 3, init= "k-means++", max_iter= 300, n_init= 10, random_state=0)
+
+y_kmeans = kmeans.fit_predict(x)
+```
+- Step 5: y_kmeans give us different clusters corresponding to X. Now let’s plot all the clusters using matplotlib.
+```python
+plt.figure(figsize= (20,9))
+plt.scatter(x[y_kmeans == 0, 0], x[y_kmeans == 0, 1], 
+            s = 100, c = 'red', label = 'Iris-setosa')
+plt.scatter(x[y_kmeans == 1, 0], x[y_kmeans == 1, 1], 
+            s = 100, c = 'blue', label = 'Iris-versicolour')
+plt.scatter(x[y_kmeans == 2, 0], x[y_kmeans == 2, 1],
+            s = 100, c = 'green', label = 'Iris-virginica')
+
+# Plotting the centroids of the clusters
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:,1], 
+            s = 100, c = 'yellow', label = 'Centroids')
+
+plt.legend()
+```
+The graph will be:
+![image](./images/scater.png)
+
