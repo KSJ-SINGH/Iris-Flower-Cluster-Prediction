@@ -110,3 +110,6 @@ plt.legend()
 The graph will be:
 ![image](./images/scater.png)
 
+# Conclusion:
+
+As you can see there are 3 clusters in total which are visualized in different colors and the centroid of each cluster is visualized in yellow color.
