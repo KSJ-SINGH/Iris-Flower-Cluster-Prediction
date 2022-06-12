@@ -2,7 +2,8 @@
 
 ## Task 2: Prediction using Unsupervised ML
 #### Author: Kunwardeep Singh Jagdev
-
+---
+## Description:
 
 ---
 ## Project Goals:
@@ -29,7 +30,5 @@ pip install pandas numpy plotly matplotlib notebook scikit-learn
 conda install pandas numpy plotly matplotlib notebook scikit-learn
 ```
 ---
-
-
-
-
+## Dataset:
+The dataset used in the implementation is the standard Iris dataset (See Table 3.1 and Fig. 3.1) with four attributes, `sepal length`, `sepal width`, `petal length`, and `petal width` and a Species label to identify the species of flower, viz., `Iris setosa`, `Iris versicolor`, and `Iris virginica`.
